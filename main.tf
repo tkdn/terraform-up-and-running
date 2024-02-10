@@ -12,6 +12,10 @@ resource "aws_launch_configuration" "example" {
               echo "Hello, World" > index.html
               nohup busybox httpd -f -p ${var.server_port} &
               EOF
+  # ASG がある起動設定を使う場合は必須
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_autoscaling_group" "example" {
