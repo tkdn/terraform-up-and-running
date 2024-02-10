@@ -46,3 +46,23 @@ resource "aws_dynamodb_table" "terraform_locks" {
     type = "S"
   }
 }
+
+terraform {
+  backend "s3" {
+    # バケット
+    bucket = "tkdn-terraform-up-and-running-state"
+    key    = "global/s3/terraform.tfstate"
+    region = "ap-northeast-1"
+    # DynamoDB
+    dynamodb_table = "tkdn-terraform-up-and-running-locks"
+    encrypt        = true
+  }
+}
+
+output "s3_bucket_arn" {
+  value = aws_s3_bucket.terraform_state.arn
+}
+
+output "dynamodb_table_name" {
+  value = aws_dynamodb_table.terraform_locks.name
+}
