@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "ap-northeast-1"
-}
-
 resource "aws_launch_configuration" "example" {
   image_id        = "ami-067983a1f071c98a2"
   instance_type   = "t2.micro"
