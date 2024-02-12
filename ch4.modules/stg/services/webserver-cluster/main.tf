@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "webserver_cluster" {
-  source = "../../../modules/webserver-cluster"
+  source = "git@github.com:tkdn/terraform-up-and-running.git//ch4.modules/modules/webserver-cluster?ref=v0.0.1"
 
   cluster_name           = "webservers-stg"
   db_remote_state_bucket = "tkdn-terraform-up-and-running-state"
