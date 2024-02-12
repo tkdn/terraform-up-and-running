@@ -9,7 +9,9 @@ resource "aws_launch_configuration" "example" {
 
   user_data = <<-EOF
               #!/bin/bash
-              echo "Hello, World" > index.html
+              echo "Hello, World" >> index.html
+              echo "${data.terraform_remote_state.db.outputs.address}" >> index.html
+              echo "${data.terraform_remote_state.db.outputs.port}" >> index.html
               nohup busybox httpd -f -p ${var.server_port} &
               EOF
   # ASG がある起動設定を使う場合は必須
@@ -127,6 +129,16 @@ data "aws_subnets" "default" {
   filter {
     name   = "vpc-id"
     values = [data.aws_vpc.default.id]
+  }
+}
+
+data "terraform_remote_state" "db" {
+  backend = "s3"
+
+  config = {
+    bucket = "tkdn-terraform-up-and-running-state"
+    key    = "stg/data-stores/mysql/terraform.tfstate"
+    region = "ap-northeast-1"
   }
 }
 
