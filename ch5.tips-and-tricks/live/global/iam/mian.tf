@@ -3,11 +3,9 @@ provider "aws" {
 }
 
 
-module "users" {
-  source = "../../../modules/landing-zone"
-
-  count     = length(var.user_names)
-  user_name = var.user_names[count.index]
+resource "aws_iam_user" "example" {
+  for_each = toset(var.user_names)
+  name     = each.value
 }
 
 variable "user_names" {
@@ -15,6 +13,6 @@ variable "user_names" {
   default = ["neo", "trinity", "morphes"]
 }
 
-output "users_arn" {
-  value = module.users[*].user_arn
+output "all_users" {
+  value = aws_iam_user.example
 }
