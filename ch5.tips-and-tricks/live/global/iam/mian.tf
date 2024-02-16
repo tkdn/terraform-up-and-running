@@ -3,9 +3,11 @@ provider "aws" {
 }
 
 
-resource "aws_iam_user" "example" {
-  for_each = toset(var.user_names)
-  name     = each.value
+module "users" {
+  source = "../../../modules/landing-zone"
+
+  for_each  = toset(var.user_names)
+  user_name = each.value
 }
 
 variable "user_names" {
@@ -13,10 +15,6 @@ variable "user_names" {
   default = ["neo", "trinity", "morphes"]
 }
 
-output "all_users" {
-  value = aws_iam_user.example
-}
-
-output "all_arns" {
-  value = values(aws_iam_user.example)[*].arn
+output "user_arns" {
+  value = values(module.users)[*].user_arn
 }
