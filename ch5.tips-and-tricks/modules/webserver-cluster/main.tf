@@ -17,6 +17,9 @@ resource "aws_launch_configuration" "example" {
 }
 
 resource "aws_autoscaling_group" "example" {
+  # 起動設定の名前に明示的に依存させ、起動設定が変更されたら ASG も書き換えられるようにする
+  name = "${var.cluster_name}-${aws_launch_configuration.example.name}"
+
   launch_configuration = aws_launch_configuration.example.name
   vpc_zone_identifier  = data.aws_subnets.default.ids
 
@@ -25,6 +28,14 @@ resource "aws_autoscaling_group" "example" {
 
   min_size = var.min_size
   max_size = var.max_size
+
+  # ASG デプロイ完了前に以下の数はヘルスチェックがパスするようにする
+  min_elb_capacity = var.min_size
+
+  # ASG 置き換え時に、置き換えるASGが作成されてから削除を明示
+  lifecycle {
+    create_before_destroy = true
+  }
 
   tag {
     key                 = "Name"
