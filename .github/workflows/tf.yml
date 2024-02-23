@@ -1,0 +1,26 @@
+name: Terraform Action
+on:
+  push:
+    branches:
+      - ch6-manage-secrets
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN }}
+          aws-region: ap-northeast-1
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.2
+          terraform_wrapper: false
+      - run: |
+          cd ch6.secrets/ec2-instance-with-oidc
+          terraform init
+          terraform plan
