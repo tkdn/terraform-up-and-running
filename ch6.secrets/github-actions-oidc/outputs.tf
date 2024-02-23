@@ -12,3 +12,7 @@ output "iam_role_arn" {
   value       = aws_iam_role.instance.arn
   description = "The ARN of the IAM role"
 }
+
+output "thumbprint_list" {
+  value = aws_iam_openid_connect_provider.github_actions.thumbprint_list
+}

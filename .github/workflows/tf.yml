@@ -1,8 +1,8 @@
 name: Terraform Action
 on:
   push:
-    branches-ignore:
-      - main
+    branches:
+      - ch6-manage-secrets
 
 jobs:
   terraform-plan:
