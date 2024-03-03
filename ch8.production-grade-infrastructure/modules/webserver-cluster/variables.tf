@@ -18,36 +18,3 @@ variable "db_remote_state_key" {
   description = "The path for database's remote state in S3"
   type        = string
 }
-
-variable "instance_type" {
-  type = string
-}
-
-variable "min_size" {
-  type = number
-}
-
-variable "max_size" {
-  type = number
-}
-
-variable "custom_tags" {
-  type    = map(string)
-  default = {}
-}
-
-variable "enable_autoscaling" {
-  type = bool
-}
-
-variable "ami" {
-  description = "The AMI to run in the cluster"
-  type        = string
-  default     = "ami-067983a1f071c98a2"
-}
-
-variable "server_text" {
-  description = "The text the web server should return"
-  type        = string
-  default     = "Hello, World"
-}
