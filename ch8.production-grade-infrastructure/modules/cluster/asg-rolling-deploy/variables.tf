@@ -11,10 +11,20 @@ variable "ami" {
 
 variable "instance_type" {
   type = string
+
+  validation {
+    condition     = contains(["t2.micro", "t3.micro"], var.instance_type)
+    error_message = "Only free tier is allowed: t2.micro | t3.micro."
+  }
 }
 
 variable "min_size" {
   type = number
+
+  validation {
+    condition     = 0 < var.min_size && var.min_size <= 10
+    error_message = "ASG can't be empty and must have 10 or fewer instances"
+  }
 }
 
 variable "max_size" {
