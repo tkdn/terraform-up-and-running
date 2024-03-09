@@ -41,3 +41,26 @@ variable "server_text" {
   type        = string
   default     = "Hello, World"
 }
+
+variable "subnet_ids" {
+  description = "Subnet IDs to deploy to"
+  type        = list(string)
+}
+
+variable "target_group_arns" {
+  description = "ARNs of ALB target groups in which to register Instances"
+  type        = list(string)
+  default     = []
+}
+
+variable "health_check_type" {
+  description = "health check to perform. Must be one of: EC2, ELB"
+  type        = string
+  default     = "EC2"
+}
+
+variable "user_data" {
+  description = "User Data script to run in instance at boot"
+  type        = string
+  default     = null
+}
