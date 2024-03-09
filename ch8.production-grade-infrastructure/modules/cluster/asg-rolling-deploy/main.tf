@@ -37,6 +37,13 @@ resource "aws_autoscaling_group" "example" {
   min_size = var.min_size
   max_size = var.max_size
 
+  lifecycle {
+    postcondition {
+      condition     = length(self.availability_zones) > 1
+      error_message = "AZ muse be more than 1"
+    }
+  }
+
   # ASG の変更を展開する歳にはインスタンスを更新する
   instance_refresh {
     strategy = "Rolling"
