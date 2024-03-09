@@ -22,14 +22,14 @@ provider "aws" {
 }
 
 module "webserver_cluster" {
-  source = "../../../../modules/webserver-cluster"
+  source = "../../../../modules/services/hello-world-app"
 
-  ami         = "ami-067983a1f071c98a2"
+  environment = "production"
+  ami         = "ami-019d9da0f68cbf7c0"
   server_text = "Hello, New World"
 
-  cluster_name           = "webservers-prod"
   db_remote_state_bucket = "tkdn-terraform-up-and-running-state"
-  db_remote_state_key    = "prod/data-stores/mysql/terraform.tfstate"
+  db_remote_state_key    = "live/prod/data-stores/mysql/terraform.tfstate"
 
   instance_type      = "t2.micro"
   min_size           = 2
