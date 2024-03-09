@@ -18,6 +18,10 @@ resource "aws_launch_configuration" "example" {
   # ASG がある起動設定を使う場合は必須
   lifecycle {
     create_before_destroy = true
+    precondition {
+      condition     = data.aws_ec2_instance_type.instance.free_tier_eligible
+      error_message = "${var.instance_type} is not free-tier."
+    }
   }
 }
 
@@ -134,6 +138,10 @@ resource "aws_cloudwatch_metric_alarm" "low_cpu_credit_balance" {
   statistic           = "Minimum"
   threshold           = 10
   unit                = "Count"
+}
+
+data "aws_ec2_instance_type" "instance" {
+  instance_type = var.instance_type
 }
 
 locals {
