@@ -18,7 +18,7 @@ module "asg" {
 
   user_data = templatefile("${path.module}/user-data.sh", {
     server_port = var.server_port
-    db_address  = local.mysql_config.adress
+    db_address  = local.mysql_config.address
     db_port     = local.mysql_config.port
     server_text = var.server_text
   })
