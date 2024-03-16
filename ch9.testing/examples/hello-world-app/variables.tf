@@ -1,17 +1,10 @@
-variable "db_name" {
-  description = "The name to use for the database"
-  type        = string
-  default     = "example_database"
-}
-
-variable "db_username" {
-  description = "The username for the database"
-  type        = string
-  sensitive   = true
-}
-
-variable "db_password" {
-  description = "The password for the database"
-  type        = string
-  sensitive   = true
+variable "mysql_config" {
+  type = object({
+    address = string
+    port    = number
+  })
+  default = {
+    address = "mock-mysql-address"
+    port    = 4403
+  }
 }
