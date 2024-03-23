@@ -24,7 +24,7 @@ provider "aws" {
 module "mysql" {
   source = "../../../../modules/data-stores/mysql"
 
-  db_name     = "example_database_staging"
+  db_name     = var.db_name
   db_username = var.db_username
   db_password = var.db_password
 }
