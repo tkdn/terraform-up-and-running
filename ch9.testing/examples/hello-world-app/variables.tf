@@ -8,3 +8,9 @@ variable "mysql_config" {
     port    = 4403
   }
 }
+
+variable "environment" {
+  default     = "The name of the environment we're deploying to"
+  type        = string
+  description = "example"
+}

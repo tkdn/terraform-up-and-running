@@ -7,10 +7,13 @@ import (
 	"time"
 
 	http_helper "github.com/gruntwork-io/terratest/modules/http-helper"
+	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
 func TestHelloWorldAppExample(t *testing.T) {
+	t.Parallel()
+
 	opts := &terraform.Options{
 		TerraformDir: "../examples/hello-world-app",
 		Vars: map[string]interface{}{
@@ -18,6 +21,7 @@ func TestHelloWorldAppExample(t *testing.T) {
 				"address": "mock-value-address",
 				"port":    3306,
 			},
+			"environment": fmt.Sprintf("test-%s", random.UniqueId()),
 		},
 	}
 
