@@ -14,7 +14,7 @@ provider "aws" {
 }
 
 module "hello_world_app" {
-  source = "../../../../../modules/services/hello-world-app"
+  source = "../../../../modules/services/hello-world-app"
 
   server_text = var.server_text
 
